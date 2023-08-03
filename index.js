@@ -1,12 +1,12 @@
-const http = require('http');
-const PORT = 3000;
+import axios from "axios";
+import cron from "node-cron";
+import 'dotenv/config'
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
-});
+console.log("[*] Started at: ", new Date().toString());
+const API_PATH = process.env.NEXTAUTH_URL || "";
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+cron.schedule("25 20 * * *", async () => {
+  console.log("--> Calling api: ", API_PATH, "...");
+  const res = await axios.get(API_PATH + "/api/rents/generateRecord");
+  console.log("Finished:  ", res.data);
 });
