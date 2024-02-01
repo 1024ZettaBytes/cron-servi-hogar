@@ -1,6 +1,7 @@
 import axios from "axios";
 import cron from "node-cron";
 import "dotenv/config";
+const today = new Date();
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -19,6 +20,6 @@ cron.schedule("58 23 * * *", async () => {
     const res = await axios.get(
       API_PATH + "/api/rents/generateRecord?id=MACHINES_REPORT"
     );
-    console.log("Finished:  ", res.data);
+    console.log("Finished Machines Record:  " + res.data);
   }
 });
